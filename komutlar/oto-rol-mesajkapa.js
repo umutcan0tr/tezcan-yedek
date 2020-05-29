@@ -1,28 +1,31 @@
-const Discord = require('discord.js')
+ const Discord = require('discord.js')
 const fs = require('fs')
 
 exports.run = async (client, message, args) => {
   	let sunucuyaözelayarlarOtorol = JSON.parse(fs.readFileSync("./otorol.json", "utf8"));
-    	let otorolkapat = JSON.parse(fs.readFileSync("./otorol.json", "utf8"));
 		if(!sunucuyaözelayarlarOtorol[message.guild.id]) {
 			const embed = new Discord.RichEmbed()
-				.setDescription(`Otorolü Ayarlamadığın İçin Sıfırlayamazsın!`)
+				.setDescription(`Otorolü Ayarlamadığın İçin Kapatamazsın!`)
 				.setColor("RED")
-				.setTimestamp('Ayarlamak İçin *otorol @roladi')
+				.setTimestamp('Ayarlamak İçin +otorol @roladi')
 			message.channel.send({embed})
 			return
 		}
-		delete sunucuyaözelayarlarOtorol[message.guild.id]
-		fs.writeFile("./otorol.json", JSON.stringify(sunucuyaözelayarlarOtorol), (err) => {
-			console.log(err)
+  exports.run = async (client, message, args, member) => {
+      	let giriscikis = JSON.parse(fs.readFileSync("./otorol.json", "utf8"));
+		delete giriscikis[message.guild.id]
+		fs.writeFile("./otorol.json", JSON.stringify(giriscikis), (err) => {
+
 		})
 		const embed = new Discord.RichEmbed()
-			.setDescription(`Otorol Başarıyla Sıfırlandı`)
+			.setDescription(`Otorol Mesajları Başarıyla Kapatıldı`)
 			.setColor("RANDOM")
 			.setTimestamp()
 		message.channel.send({embed})
 		return
-	}
+	}}
+
+
 
 
 exports.conf = {
@@ -33,7 +36,7 @@ exports.conf = {
 };
 
 exports.help = {
-  name: 'otorolsıfırla', 
+  name: 'kapat otoyazı', 
   description: 'Slots oyunu oynar',
-  usage: 'otorolkapat'
+  usage: 'otorolmesajkapat'
 };

@@ -7,7 +7,7 @@ exports.run = async (bot, message, args) =>
 {
   	let profil = JSON.parse(fs.readFileSync("./otorol.json", "utf8"));
   var mentionedChannel = message.mentions.channels.first();
-  if (!mentionedChannel && args[0] !== "sıfırla") return message.channel.send("Ayarlamam İçin Bir Rol Etiketlemelisin. \nRolü Etiketleyemiyorsan **Rolün Etiketleme Seçeneğini Aktif Etmeyi Unutma** \nÖrnek Kullanım : +otorol @rol #kanal \n**Oto Yazı Kapatmak İstiyorsan +kapat otoyazı**");
+  if (!mentionedChannel && args[0] !== "sıfırla") return message.channel.send("Ayarlamam İçin Bir Rol Etiketlemelisin. \nRolü Etiketleyemiyorsan **Rolün Etiketleme Seçeneğini Aktif Etmeyi Unutma** \nÖrnek Kullanım : *otorol @rol #kanal \n**Oto Yazı Kapatmak İstiyorsan +kapat otoyazı**");
   if (message.guild.member(message.author.id).hasPermission(0x8))
     
     {
