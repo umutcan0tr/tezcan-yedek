@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const ayarlar = require('../ayarlar.json');
 exports.run = (client, message, args) => {
     if(message.author.id !== ayarlar.sahip) {
-  if(message.author.id !== 'İDNİZ')//Bot Sahibi'nin ıdsi
+  if(message.author.id !== '301013260596019201')//Bot Sahibi'nin ıdsi
  
       
       return;
