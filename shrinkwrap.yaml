@@ -17,7 +17,7 @@ dependencies:
   express: 4.17.1
   ffmpeg: 0.0.4
   ffmpeg-binaries: 4.0.0
-  fs: 0.0.1-security
+  fs: 0.0.2
   g-image-search: 1.0.2
   gitinfo: 2.4.0
   google-tts-api: 0.0.4
@@ -3998,10 +3998,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
-  /fs/0.0.1-security:
+  /fs/0.0.2:
     dev: false
     resolution:
-      integrity: sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
+      integrity: sha1-4fJE7zkzwbKmS9R5kTYGDQ9ZFPg=
   /fsevents/1.2.13:
     dependencies:
       bindings: 1.5.0
@@ -9407,7 +9407,7 @@ specifiers:
   express: ^4.17.1
   ffmpeg: ^0.0.4
   ffmpeg-binaries: ^4.0.0
-  fs: 0.0.1-security
+  fs: ^0.0.2
   g-image-search: ^1.0.2
   gitinfo: ^2.4.0
   google-tts-api: ^0.0.4
