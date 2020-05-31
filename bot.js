@@ -417,10 +417,6 @@ app.get("/", (request, response) => {
   console.log(Date.now() + " Ping tamamdır.");
   response.sendStatus(200);
 });
-app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
 ///////////
 
 client.on('guildMemberAdd', async member => {
@@ -468,30 +464,15 @@ client.on("message", async message => {
 
 ///////////////////////////////////////////////////
 
-client.on("message",message => {
-  if(!message.author.bot) return;
-  db.fetch(`usohbet_${message.channel.id}`).then(usdurum => {
-    if(!usdurum || usdurum === 'pasif') return;
-    else {
-      message.delete(3500)
-    }
-})})
 
 ///////////////////////////////////////////////////
 
 
 ///////////////////////////////////////////////////
 
+
 ///////////////////////////////////////////////////
 
-client.on('guildMemberAdd', member => {
- let guvenlik= db.fetch(`bottemizle_${member.guild.id}`)
-    if (!guvenlik) return;
-    if(member.user.bot !==true){
-    } else {
-   member.kick(member) 
-  }  
-  });
 
 ///////////////////////////////////////////////////
 
