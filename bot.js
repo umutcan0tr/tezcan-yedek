@@ -1,22 +1,7 @@
 
-const chalk = require('chalk');
-client.queue = new Map();
-const fs = require("fs");
-const db = require("quick.db");
-const moment = require("moment");
-require("./util/eventLoader")(client);
 
 ///////////
 const path = require("path");
-app.get("/", (request, response) => {
-  console.log(Date.now() + " Ping tamamdır.");
-  response.sendStatus(200);
-});
-app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
-///////////
 //consts (for glitch)
 // GEREKLİ YERLER
 const express = require("express");
