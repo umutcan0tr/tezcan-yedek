@@ -1,6 +1,3 @@
-client.queue = new Map();
-const db = require("quick.db");
-require("./util/eventLoader")(client);
 //consts (for glitch)
 // GEREKLİ YERLER
 const express = require("express");
@@ -20,10 +17,6 @@ const db = require("quick.db");
 var prefix = ayarlar.prefix;
 
 
-// ISIM \\
-const isimloz = "Code Music";
-const oynuyorloz = "Code Music";
-// ISIM \\
 
 // KOMUTLAR \\
 const yardımloz = "yardım";
@@ -127,7 +120,6 @@ client.on("message", async msg => {
   
                   msg.channel.sendEmbed(
             new Discord.RichEmbed()
-              .setTitle(`${isimloz} | Şarkı Seçimi`)
               .setDescription(
                 `${videos
                   .map(video2 => `**${++index} -** ${video2.title}`)
@@ -300,7 +292,6 @@ ${baslik} **GENEL KOMUTLAR** ${baslik}
     return msg.channel.sendEmbed(
       new Discord.RichEmbed()
         .setColor("RANDOM")
-        .setTitle(`${isimloz} | Çalan`)
         .addField(
           "Başlık",
           `[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})`,
@@ -324,7 +315,6 @@ ${baslik} **GENEL KOMUTLAR** ${baslik}
       .sendEmbed(
         new Discord.RichEmbed()
           .setColor("RANDOM")
-          .setTitle(`${isimloz} | Şarkı Kuyruğu`)
           .setDescription(
             `${serverQueue.songs
               .map(song => `**${++index} -** ${song.title}`)
@@ -445,7 +435,6 @@ function play(guild, song) {
   serverQueue.textChannel.sendEmbed(
     new Discord.RichEmbed()
       .setTitle(
-        `**${isimloz} | 🎙 Müzik Başladı**`,
         `https://cdn.discordapp.com/avatars/473974675194511361/6bb90de9efe9fb80081b185266bb94a6.png?size=2048`
       )
       .setThumbnail(
@@ -460,10 +449,6 @@ function play(guild, song) {
 
 //////////////////
 
-client.on("ready", () => {
-    console.log(`${isimloz} Artık Hazır.`);
-    client.user.setActivity(`${oynuyorloz}`, {type: "LISTENING"})
-});
 
 client.elevation = message => {
   if (!message.guild) {
