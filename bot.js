@@ -197,15 +197,15 @@ client.on("message", async msg => {
 .setDescription(`
 ${baslik} **GENEL KOMUTLAR** ${baslik}
 
-[${emoji}] !çal <- Müziği Bulur Ve Çalar.
+[${emoji}] *çal <- Müziği Bulur Ve Çalar.
 
-[${emoji}] !bitir <- Müziği Bitirir.
+[${emoji}] *bitir <- Müziği Bitirir.
 
-[${emoji}] !durdur  <- Müziği Durdurur.
+[${emoji}] *durdur  <- Müziği Durdurur.
 
-[${emoji}] !geç  <- Müzik Atlar Bi Sonraki Müzigi Açar.
+[${emoji}] *geç  <- Müzik Atlar Bi Sonraki Müzigi Açar.
 
-[${emoji}] !ses  <- Ses Seviyesini Belirler.
+[${emoji}] *ses  <- Ses Seviyesini Belirler.
 `,true);
   
   msg.channel.send(yardım);
