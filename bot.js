@@ -1,22 +1,12 @@
-
-
-///////////
-const path = require("path");
+client.queue = new Map();
+const db = require("quick.db");
+require("./util/eventLoader")(client);
 //consts (for glitch)
 // GEREKLİ YERLER
 const express = require("express");
 const app = express();
 const http = require("http");
-app.get("/", (request, response) => {
-  console.log(
-    ` az önce pinglenmedi. Sonra ponglanmadı... ya da başka bir şeyler olmadı.`
-  );
-  response.sendStatus(200);
-});
-app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
+
 // GEREKLİ YERLER
 // -------------------------------------------------------------
 const Discord = require("discord.js");
@@ -30,6 +20,10 @@ const db = require("quick.db");
 var prefix = ayarlar.prefix;
 
 
+// ISIM \\
+const isimloz = "Code Music";
+const oynuyorloz = "Code Music";
+// ISIM \\
 
 // KOMUTLAR \\
 const yardımloz = "yardım";
@@ -133,6 +127,7 @@ client.on("message", async msg => {
   
                   msg.channel.sendEmbed(
             new Discord.RichEmbed()
+              .setTitle(`${isimloz} | Şarkı Seçimi`)
               .setDescription(
                 `${videos
                   .map(video2 => `**${++index} -** ${video2.title}`)
@@ -210,15 +205,15 @@ client.on("message", async msg => {
 .setDescription(`
 ${baslik} **GENEL KOMUTLAR** ${baslik}
 
-[${emoji}] *çal <- Müziği Bulur Ve Çalar.
+[${emoji}] !çal <- Müziği Bulur Ve Çalar.
 
-[${emoji}] *bitir <- Müziği Bitirir.
+[${emoji}] !bitir <- Müziği Bitirir.
 
-[${emoji}] *durdur  <- Müziği Durdurur.
+[${emoji}] !durdur  <- Müziği Durdurur.
 
-[${emoji}] *geç  <- Müzik Atlar Bi Sonraki Müzigi Açar.
+[${emoji}] !geç  <- Müzik Atlar Bi Sonraki Müzigi Açar.
 
-[${emoji}] *ses  <- Ses Seviyesini Belirler.
+[${emoji}] !ses  <- Ses Seviyesini Belirler.
 `,true);
   
   msg.channel.send(yardım);
@@ -305,6 +300,7 @@ ${baslik} **GENEL KOMUTLAR** ${baslik}
     return msg.channel.sendEmbed(
       new Discord.RichEmbed()
         .setColor("RANDOM")
+        .setTitle(`${isimloz} | Çalan`)
         .addField(
           "Başlık",
           `[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})`,
@@ -328,6 +324,7 @@ ${baslik} **GENEL KOMUTLAR** ${baslik}
       .sendEmbed(
         new Discord.RichEmbed()
           .setColor("RANDOM")
+          .setTitle(`${isimloz} | Şarkı Kuyruğu`)
           .setDescription(
             `${serverQueue.songs
               .map(song => `**${++index} -** ${song.title}`)
@@ -448,6 +445,7 @@ function play(guild, song) {
   serverQueue.textChannel.sendEmbed(
     new Discord.RichEmbed()
       .setTitle(
+        `**${isimloz} | 🎙 Müzik Başladı**`,
         `https://cdn.discordapp.com/avatars/473974675194511361/6bb90de9efe9fb80081b185266bb94a6.png?size=2048`
       )
       .setThumbnail(
@@ -462,7 +460,10 @@ function play(guild, song) {
 
 //////////////////
 
-
+client.on("ready", () => {
+    console.log(`${isimloz} Artık Hazır.`);
+    client.user.setActivity(`${oynuyorloz}`, {type: "LISTENING"})
+});
 
 client.elevation = message => {
   if (!message.guild) {
@@ -486,234 +487,3 @@ client.on("error", e => {
 });
 
 client.login(ayarlar.token);
-
-////////////////////////////////////////////////////////////////////////////////
-
-client.reload = command => {
-  return new Promise((resolve, reject) => {
-    try {
-      delete require.cache[require.resolve(`./komutlar/${command}`)];
-      let cmd = require(`./komutlar/${command}`);
-      client.commands.delete(command);
-      client.aliases.forEach((cmd, alias) => {
-        if (cmd === command) client.aliases.delete(alias);
-      });
-      client.commands.set(command, cmd);
-      cmd.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, cmd.help.name);
-      });
-      resolve();
-    } catch (e){
-      reject(e);
-    }
-  });
-};
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.load = command => {
-  return new Promise((resolve, reject) => {
-    try {
-      let cmd = require(`./komutlar/${command}`);
-      client.commands.set(command, cmd);
-      cmd.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, cmd.help.name);
-      });
-      resolve();
-    } catch (e){
-      reject(e);
-    }
-  });
-};
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.unload = command => {
-  return new Promise((resolve, reject) => {
-    try {
-      delete require.cache[require.resolve(`./komutlar/${command}`)];
-      let cmd = require(`./komutlar/${command}`);
-      client.commands.delete(command);
-      client.aliases.forEach((cmd, alias) => {
-        if (cmd === command) client.aliases.delete(alias);
-      });
-      resolve();
-    } catch (e){
-      reject(e);
-    }
-  });
-};
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.on('message', msg => {
-  if (msg.content.toLowerCase() === 'sa') {
-    msg.reply('Aleyküm selam,  hoş geldin ^^');
-  }
-});
-
-client.elevation = message => {
-  if(!message.guild) {
-	return; }
-  let permlvl = 0;
-  if (message.member.hasPermission("BAN_MEMBERS")) permlvl = 2;
-  if (message.member.hasPermission("ADMINISTRATOR")) permlvl = 3;
-  if (message.author.id === ayarlar.sahip) permlvl = 4;
-  return permlvl;
-};
-
-//////////////////////////////////////////////////////////////////////////////////
-
-var regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
-// client.on('debug', e => {
-//   console.log(chalk.bgBlue.green(e.replace(regToken, 'that was redacted')));
-// });
-
-client.on('warn', e => {
-  console.log(chalk.bgYellow(e.replace(regToken, 'that was redacted')));
-});
-
-client.on('error', e => {
-  console.log(chalk.bgRed(e.replace(regToken, 'that was redacted')));
-});
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.on("message", async message => {
-    let afk_kullanici = message.mentions.users.first() || message.author;
-    if(message.content.startsWith("*afk")) return; //! yazan yeri kendi botunuzun prefixi ile değiştirin.
-  if (message.author.bot === true) return;
-    if(message.content.includes(`<@${afk_kullanici.id}>`))
-        if(await db.fetch(`afks_${afk_kullanici.id}`)) {
-                message.channel.send(`**${client.users.get(afk_kullanici.id).tag}** adlı kullanıcı şuanda AFK! \n**Sebep:** \n${await db.fetch(`afks_${afk_kullanici.id}`)}`)
-        }
-        if(await db.fetch(`afks_${message.author.id}`)) {
-                message.reply("başarıyla AFK modundan çıktın!")
-            db.delete(`afks_${message.author.id}`)
-        }
-});
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.on("message",message => {
-  if(!message.author.bot) return;
-  db.fetch(`usohbet_${message.channel.id}`).then(usdurum => {
-    if(!usdurum || usdurum === 'pasif') return;
-    else {
-      message.delete(3500)
-    }
-})});
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.on('guildMemberAdd', member => {
-  db.fetch(`autoRole_${member.guild.id}`).then(i => {
- try {
- member.addRole(member.guild.roles.find("name", i))
-} catch (e) {
- console.log('Rol veremedim...')
-}
-})
-});
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.on("message", async message => {
-
-if( message.content === "sa" || message.content === "Sa" || message.content === "Selamın Aleyküm" || message.content === "selamın aleyküm" || message.content === "sea" || message.content === "Sea") {
-
-let gold = require("quick.db").fetch(`tios_gold${message.author.id}`)
-if (gold === "gold") {
-
-  const embed = new Discord.RichEmbed()
-  .setColor("GOLD")
-  .setDescription(" Hizaya Geçin Bu Bir **Gold** Üye ! ")
-  message.channel.send({embed})
-
-  } else {
-
-return;
-
-  }
-}
-});
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.on("message", async msg => {
-  db.fetch(`kufur_${msg.guild.id}`).then(i => {
-if (i == 'Açık') {
-        const kufur = ["discord.gg","https//",".com",".xyz",".net"];
-        if (kufur.some(word => msg.content.includes(word))) {
-          try {
-             if (!msg.member.hasPermission("BAN_MEMBERS")) {
-                  
-     
-               
-               msg.delete(); 
-             
-
-                  return msg.reply('Reklam yapmamalısın.').then(msg => msg.delete(3000));
-             }
-          } catch(err) {
-            console.log(err);
-          }
-        } } else if (i == 'Kapalı') {
-
-}
-
-})
-});
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.on("message", async msg => {
-
-
-  const i = await db.fetch(`ssaass_${msg.guild.id}`);
-    if (i == 'acik') {
-      if (msg.content.toLowerCase() == 'selam' || msg.content.toLowerCase() == 'sa' || 
-msg.content.toLowerCase() == 'Selam Naber') {
-          try {
-
-                  return msg.reply('Aleyküm Selam')
-          } catch(err) {
-            console.log(err);
-          }
-      }
-    }
-    else if (i == 'kapali') {
-    
-    }
-    if (!i) return;
-
-    });
-
-//////////////////////////////////////////////////////////////////////////////////
-
-client.on("message", async msg => {
-  db.fetch(`kufur_${msg.guild.id}`).then(i => {
-if (i == 'Açık') {
-        const kufur = ["amk","a.m.k","am","a.m","m.k","mk","orosbu çocugu","orospu çocugu","o.ç","oç","oc","o.c","orosbu","orospu","veledi","zina","sikerim","sıkerım","s.i.k.e.r.i.m","s.ı.k.e.r.ı.m","piç","pıc","p.i.ç","p.ı.c","orosbu evladı","orospu evladı","amına koyayım","babanı sikim","sik","s.ik","si.k","s.i.k"];
-        if (kufur.some(word => msg.content.includes(word))) {
-          try {
-             if (!msg.member.hasPermission("BAN_MEMBERS")) {
-                  
-     
-               
-               msg.delete(); 
-             
-
-                  return msg.reply('Küfür etme amına kodumun salağı.').then(msg => msg.delete(3000));
-             }
-          } catch(err) {
-            console.log(err);
-          }
-        } } else if (i == 'Kapalı') {
-
-}
-
-})
-});
-
-//////////////////////////////////////////////////////////////////////////////////
