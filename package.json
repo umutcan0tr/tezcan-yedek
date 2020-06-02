@@ -5,9 +5,19 @@
   "name": "hello-express",
   "version": "0.0.1",
   "description": "A simple Node app built on Express, instantly up and running.",
-  "main": "bot.js",
-  "scripts": {
-    "start": "node bot.js"
+  "main": "index.js",
+  "author": "Erit Islami <eritislami@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "discord.js": "github:discordjs/discord.js",
+    "opusscript": "0.0.7",
+    "simple-youtube-api": "^5.1.1",
+    "ytdl-core": "^1.0.0",
+    "ytdl-core-discord": "amishshah/ytdl-core-discord"
+  },
+  "optionalDependencies": {
+    "erlpack": "discordapp/erlpack",
+    "node-opus": "^0.3.1"
   },
   "dependencies": {
     "common-tags": "^1.8.0",
