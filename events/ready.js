@@ -9,7 +9,6 @@ module.exports = client => {
 var oyun = [
         "By Oğuz Acar",
         "Sponsorlar: twitch.tv/Valuntary",
-        "Beta Verision."
     ];
 
     setInterval(function() {
