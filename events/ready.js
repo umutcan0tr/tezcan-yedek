@@ -7,8 +7,7 @@ var prefix = ayarlar.prefix;
 
 module.exports = client => {
 var oyun = [
-        "By Oğuz Acar",
-        "Sponsorlar: twitch.tv/Valuntary",
+        "By HES'TezcanN"
     ];
 
     setInterval(function() {
